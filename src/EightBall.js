@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./EightBall.css";
 import _ from "lodash";
 
+// keep this in a separate file & import it
+
 const defaultAnswers = [
   { msg: "It is certain.", color: "green" },
   { msg: "It is decidedly so.", color: "green" },
@@ -29,7 +31,7 @@ const defaultAnswers = [
 const defaultResult = {
   msg: "Think of a Question",
   color: "black",
-}
+} // could put this directly into useState when initializing
 
 /** EightBall to show user random message/color
  *
@@ -47,14 +49,26 @@ function EightBall({ answers=defaultAnswers }) {
   const [result, setResult] = useState(defaultResult);
 
   function shakeEightBall() {
-    setResult(_.sample(answers));
+    setResult(_.sample(answers)); // good to document in case someone isn't
+    // familiar with lodash
   }
 
+  function resetEightBall() { // ok to have docstrings here -- short & sweet
+    setResult(defaultResult);
+  }
+
+  // tab style on 64 over to make it clear it's part of button
+  // span tag would be good for 65 rather than putting p tag inside button
   return (
-    <button onClick={shakeEightBall} className="EightBall"
-     style={{background: `${result.color}`}}>
-      <p className="EightBall-text">{result.msg}</p>
-    </button>
+    <div>
+      <button onClick={shakeEightBall} className="EightBall"
+      style={{background: `${result.color}`}}>
+        <p className="EightBall-text">{result.msg}</p>
+      </button>
+      <button onClick={resetEightBall}>
+        <p>Reset EightBall</p>
+      </button>
+    </div>
   )
 }
 
