@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./EightBall.css";
+import _ from "lodash";
 
 const defaultAnswers = [
   { msg: "It is certain.", color: "green" },
@@ -23,6 +25,7 @@ const defaultAnswers = [
   { msg: "Very doubtful.", color: "red" },
 ];
 
+// Initial state for EightBall
 const defaultResult = {
   msg: "Think of a Question",
   color: "black",
@@ -34,19 +37,24 @@ const defaultResult = {
  * - Answers: [{msg, color}, {msg, color},...]
  *
  * States:
- * - Result: {msg, color}
+ * - Result: {msg, color} (Initial State is defaultResult)
  *
  * App -> EightBall
  */
 
 function EightBall({ answers=defaultAnswers }) {
 
-  const [result, setResult] = useState(defaultResult)
+  const [result, setResult] = useState(defaultResult);
+
+  function shakeEightBall() {
+    setResult(_.sample(answers));
+  }
 
   return (
-    <div className="EightBall" style={{background: `${result.color}`}}>
+    <button onClick={shakeEightBall} className="EightBall"
+     style={{background: `${result.color}`}}>
       <p className="EightBall-text">{result.msg}</p>
-    </div>
+    </button>
   )
 }
 
